@@ -1,0 +1,57 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "kasa-vault"
+description = "Personal, portable, single-file encrypted vault (XChaCha20-Poly1305 + Argon2id)."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "Fatih" }]
+keywords = ["encryption", "vault", "argon2id", "xchacha20", "libsodium", "privacy"]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Environment :: Console",
+    "Intended Audience :: End Users/Desktop",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: POSIX :: Linux",
+    "Programming Language :: Python :: 3",
+    "Topic :: Security :: Cryptography",
+]
+dependencies = ["pynacl>=1.5"]
+dynamic = ["version"]
+
+[project.optional-dependencies]
+# tkinter ships with the interpreter (provided by the Nix `tkinter` package /
+# your distro's python3-tk), so there is nothing to pip-install for the GUI.
+dev = ["pytest>=7", "ruff"]
+
+[project.scripts]
+kasa = "kasa.cli:main"
+kasa-gui = "kasa.gui:main"
+
+[project.urls]
+Documentation = "https://github.com/Fatih/kasa/blob/main/README.md"
+Source = "https://github.com/Fatih/kasa"
+
+[tool.hatch.version]
+path = "src/kasa/_version.py"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/kasa"]
+
+[tool.hatch.build.targets.sdist]
+include = ["src/kasa", "tests", "docs", "README.md", "LICENSE", "CHANGELOG.md"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "UP", "B"]
+ignore = ["E501"]  # long lines tolerated in comments/strings
