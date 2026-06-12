@@ -1,4 +1,4 @@
-# kasa
+# Encrypted Vault
 
 A personal, portable, **single-file encrypted vault**. Keep your private
 documents and photos in one encrypted file (`my-vault.enc`). Open it to edit and
